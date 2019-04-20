@@ -47,3 +47,11 @@ URxvt*tintColor: #303030
 !urxvt*depth: 32
 !urxvt*background: rgba:0030/0063/0230/c100
 
+!--resize fonts
+URxvt.keysym.C-minus:     resize-font:smaller
+URxvt.keysym.C-plus:      resize-font:bigger
+URxvt.keysym.C-equal:     resize-font:reset
+URxvt.keysym.C-question:  resize-font:show
+
+!--extensions
+urxvt.perl-ext-common: resize-font
