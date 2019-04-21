@@ -353,7 +353,10 @@ type = custom/script
 ; Available tokens:
 ;   %counter%
 ; Command to be executed (using "/usr/bin/env sh -c [command]")
-exec = date
+format-prefix = "RAM: "
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = #fff000
+exec = memory.sh
 
 ; Will the script output continous content?
 ; Default: false

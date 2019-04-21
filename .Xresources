@@ -2,52 +2,68 @@
 
 
 !!----General Configurations
-*foreground: #FFFFFF
-*background: #312E2E
-*background-alt: #838181
-*foreground-alt: #838181
-*color0: #222
-*color8: #A5B6BC
-*color1: #A54242
-*color9: #CC6666
-*color2: #99CC99
-*color10: #AAE3AA
-*color3: #DE935F
-*color11: #F0C674
-*color4: #5F819D
-*color12: #81A2BE
-*color5: #85678F
-*color13: #B294BB
-*color6: #5E8D87
-*color14: #8ABEB7
-*color7: #FFF000
-*color15: #C5C8C6
+! foreground: text, color10: user prompt
 
+#define tint #434E6B
+
+*.foreground:   #e0e2e9
+*.background:   #000000
+*.cursorColor:  #e0e2e9
+
+! black
+*.color0:       #000000
+*.color8:       #8ba3da
+
+! red
+*.color1:       #0e1017
+*.color9:       #7c8eb9
+
+! green
+*.color2:       #1f232d
+*.color10:      #b15ea7
+
+! yellow
+*.color3:       #363c4b
+*.color11:      #a19355
+
+! blue
+*.color4:       #535b71
+*.color12:      #80bf8c
+
+! magenta
+*.color5:       #77829f
+*.color13:      #679a71
+
+! cyan
+*.color6:       #a8afc3
+*.color14:      #d86660
+
+! white
+*.color7:       #e0e2e9
+*.color15:      #91a0c8
+
+
+
+
+!! i3
 
 
 
 
 !!----RXVT-UNICODE Configurations
-!URxvt.font: xft:Ubuntu Mono:size=13
-URxvt.font: xft:Hack:style=Regular:size=13
+URxvt.font: xft:Ubuntu Mono:size=16
+!URxvt.font: xft:Hack:style=Regular:size=13
 
 URxvt*scrollBar: false
-Xft.dpi:                    96
-Xft.antialias:              true
-Xft.rgba:                   rgb
-Xft.hinting:                true
-Xft.hintstyle:              hintslight
 URxvt*letterSpace: -2
-URxvt*cursorBlink:                    true
-URxvt*cursorUnderline:                true
+URxvt*cursorBlink: true
 URxvt*saveLines: 20000
+URxvt*internalBorder: 10
 
-
+! Transparency
 URxvt*transparent: true
-URxvt*tintColor: #303030
-!--transparency
-!urxvt*depth: 32
-!urxvt*background: rgba:0030/0063/0230/c100
+URxvt*tintColor: tint
+
 
 !--resize fonts
 URxvt.keysym.C-minus:     resize-font:smaller
