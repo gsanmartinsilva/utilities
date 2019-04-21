@@ -2,8 +2,10 @@
 
 
 !!----General Configurations
-*foreground: #C5C8C6
-*background: #303030
+*foreground: #FFFFFF
+*background: #312E2E
+*background-alt: #838181
+*foreground-alt: #838181
 *color0: #222
 *color8: #A5B6BC
 *color1: #A54242
