@@ -30,3 +30,4 @@ fi
 # Add to the path the folder ~/.scripts
 PATH=$PATH:$HOME/.scripts
 export PATH
+

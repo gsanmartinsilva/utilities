@@ -4,44 +4,42 @@
 !!----General Configurations
 ! foreground: text, color10: user prompt
 
-#define tint #434E6B
+#define tint #000000
+*.foreground:       #d3d0c5
+*.background:       #14101b
 
-*.foreground:   #e0e2e9
-*.background:   #000000
-*.cursorColor:  #e0e2e9
+*.color0: #14101b
 
-! black
-*.color0:       #000000
-*.color8:       #8ba3da
+*.color1: #DB3752
 
-! red
-*.color1:       #0e1017
-*.color9:       #7c8eb9
+*.color2: #9F5766
 
-! green
-*.color2:       #1f232d
-*.color10:      #b15ea7
+*.color3: #DD5A63
 
-! yellow
-*.color3:       #363c4b
-*.color11:      #a19355
+*.color4: #A58579
 
-! blue
-*.color4:       #535b71
-*.color12:      #80bf8c
+*.color5: #EF8C78
 
-! magenta
-*.color5:       #77829f
-*.color13:      #679a71
+*.color6: #958287
 
-! cyan
-*.color6:       #a8afc3
-*.color14:      #d86660
+*.color7: #d3d0c5
 
-! white
-*.color7:       #e0e2e9
-*.color15:      #91a0c8
+*.color8: #939189
 
+*.color9: #DB3752
+
+*.color10: #9F5766
+
+
+*color11:  #DD5A63
+
+*color12:  #A58579
+
+*color13:  #EF8C78
+
+*color14:  #958287
+
+*color15:  #d3d0c5
 
 
 
@@ -51,8 +49,9 @@
 
 
 !!----RXVT-UNICODE Configurations
-URxvt.font: xft:Ubuntu Mono:size=16
-!URxvt.font: xft:Hack:style=Regular:size=13
+!URxvt.font: xft:Ubuntu Mono:size=16
+URxvt.font: xft:Hack:style=Regular:size=14
+
 
 URxvt*scrollBar: false
 URxvt*letterSpace: -2
@@ -61,8 +60,10 @@ URxvt*saveLines: 20000
 URxvt*internalBorder: 10
 
 ! Transparency
-URxvt*transparent: true
-URxvt*tintColor: tint
+!URxvt*transparent: true
+!URxvt*tintColor: tint
+URxvt*depth: 32
+URxvt.background: [80]tint
 
 
 !--resize fonts
