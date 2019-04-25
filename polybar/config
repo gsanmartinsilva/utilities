@@ -16,19 +16,24 @@
 ;
 ;==========================================================
 
-[colors]
-background = ${xrdb:background}
-background-alt = ${xrdb:background-alt}
-foreground = ${xrdb:foreground}
-foreground-alt = ${xrdb:foreground-alt}
 
+[colors]
+;background = ${xrdb:color0:#222}
+background = #222
+background-alt = #444
+;foreground = ${xrdb:color7:#222}
+foreground = #dfdfdf
+foreground-alt = #555
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
 
 [bar/example]
+;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
-height = 22
+height = 20p
+offset-x = 0%
+offset-y = 0%
 radius = 0
 fixed-center = false
 
@@ -42,18 +47,18 @@ border-size = 0
 border-color = #00000000
 
 padding-left = 0
-padding-right = 0
+padding-right = 2
 
-module-margin-left = 2
+module-margin-left = 1
 module-margin-right = 2
 
 font-0 = fixed:pixelsize=10;1
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 font-2 = siji:pixelsize=10;1
 
-modules-left = i3 memory cpu 
-modules-center = test
-modules-right =  pulseaudio wlan battery date powermenu
+modules-left = i3
+modules-center =
+modules-right = filesystem xbacklight  pulseaudio memory cpu wlan eth battery temperature powermenu date
 
 tray-position = right
 tray-padding = 2
@@ -73,8 +78,20 @@ tray-padding = 2
 cursor-click = pointer
 cursor-scroll = ns-resize
 
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...%
 
-;-------MODULES-------
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground-alt}
 
 [module/bspwm]
 type = internal/bspwm
@@ -136,13 +153,48 @@ label-urgent-padding = ${module/bspwm.label-urgent-padding}
 ; label-separator = |
 
 
+[module/mpd]
+type = internal/mpd
+format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
+
+icon-prev = 
+icon-stop = 
+icon-play = 
+icon-pause = 
+icon-next = 
+
+label-song-maxlen = 25
+label-song-ellipsis = true
+
+[module/xbacklight]
+type = internal/xbacklight
+
+format = <label> <bar>
+label = BL
+
+bar-width = 10
+bar-indicator = |
+bar-indicator-foreground = #fff
+bar-indicator-font = 2
+bar-fill = ─
+bar-fill-font = 2
+bar-fill-foreground = #9f78e1
+bar-empty = ─
+bar-empty-font = 2
+bar-empty-foreground = ${colors.foreground-alt}
+
+[module/backlight-acpi]
+inherit = module/xbacklight
+type = internal/backlight
+card = intel_backlight
+
 [module/cpu]
 type = internal/cpu
-interval = 5
+interval = 2
 format-prefix = "CPU: "
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #f90000
-label = %percentage:2%%
+label = %percentage:1%%
 
 [module/memory]
 type = internal/memory
@@ -174,6 +226,21 @@ ramp-signal-3 = 
 ramp-signal-4 = 
 ramp-signal-foreground = ${colors.foreground-alt}
 
+[module/eth]
+type = internal/network
+interface = enp4s0
+interval = 3.0
+
+format-connected-underline = #55aa55
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.foreground-alt}
+label-connected = %local_ip%
+
+format-disconnected =
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-alt}
 
 [module/date]
 type = internal/date
@@ -340,33 +407,3 @@ margin-top = 5
 margin-bottom = 5
 
 ; vim:ft=dosini
-
-
-
-
-
-
-
-[module/test]
-type = custom/script
-
-; Available tokens:
-;   %counter%
-; Command to be executed (using "/usr/bin/env sh -c [command]")
-format-prefix = "RAM: "
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #fff000
-exec = memory.sh
-
-; Will the script output continous content?
-; Default: false
-tail = false
-
-; Seconds to sleep between updates
-; Default: 5 (0 if `tail = true`)
-interval = 2
-
-
-
-
-
