@@ -58,7 +58,7 @@ font-2 = siji:pixelsize=10;1
 
 modules-left = i3
 modules-center =
-modules-right = filesystem xbacklight  pulseaudio memory cpu wlan eth battery temperature powermenu date
+modules-right = filesystem xbacklight  pulseaudio ram_memory cpu wlan eth battery temperature powermenu date
 
 tray-position = right
 tray-padding = 2
@@ -407,3 +407,18 @@ margin-top = 5
 margin-bottom = 5
 
 ; vim:ft=dosini
+
+
+
+
+; CUSTOM MODULES
+[module/ram_memory]
+type = custom/script
+exec = memory.sh
+interval = 5
+format-underline = #FFFFFF
+format-prefix = "Mem: "
+format-prefix-foreground = #000000
+format-background = #FFFFFF
+format-padding = 2
+click-left = memory.sh

@@ -24,72 +24,49 @@ set_from_resource $background background #FFF000
 set_from_resource $foreground foreground #FFF000
 set_from_resource $cursor cursorColor #FFF000
 set_from_resource $color10 color10 #FFF000
+
 #+-+-+-+-+-+-+-+-+-+-+-+
 #|k|e|y|b|i|n|d|i|n|g|s|
 #+-+-+-+-+-+-+-+-+-+-+-+
-#akey Alt = Mod
 set $mod Mod1
-
-# Variables
-set $editor gedit
-
 # Open editor
-bindsym $mod+m exec urxvt -e gedit
-
-# Use Mouse+$mod to drag floating windows to their wanted position
+bindsym $mod+a exec urxvt -e atom
 floating_modifier $mod
-
-# start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
-
-# start ranger
 bindsym $mod+e exec urxvt -e ranger
-
 # kill focused window
 bindsym $mod+q			[con_id="__focused__" instance="^(?!dropdown_).*$"] kill
 bindsym $mod+Shift+q		[con_id="__focused__" instance="^(?!dropdown_).*$"] exec --no-startup-id kill -9 `xdotool getwindowfocus getwindowpid`
-
-# start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run
-
 bindsym $mod+i 	exec urxvt -e htop
-
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
 bindsym $mod+l focus up
 bindsym $mod+ntilde focus right
-
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
-
 # move focused window
 bindsym $mod+Shift+j move left
 bindsym $mod+Shift+k move down
 bindsym $mod+Shift+l move up
 bindsym $mod+Shift+ntilde move right
-
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
-
 # split toggle
 bindsym $mod+t	split toggle
-
 # Open browser
 bindsym $mod+w	exec --no-startup-id chromium
-
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
-
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
-
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1"
@@ -102,7 +79,6 @@ set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
-
 # switch to workspace
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
@@ -114,7 +90,6 @@ bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
 bindsym $mod+0 workspace $ws10
-
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
 bindsym $mod+Shift+2 move container to workspace $ws2
@@ -126,16 +101,12 @@ bindsym $mod+Shift+7 move container to workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
-
 # reload the configuration file
 bindsym $mod+Shift+c reload
-
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
@@ -165,8 +136,9 @@ bindsym $mod+r mode "resize"
 
 
 
+
+
 #------ Start up applications
-exec --no-startup-id redshift -l -33.448891:-70.669266
+exec --no-startup-id redshift -O 3500
 exec_always --no-startup-id ~/.config/polybar/start_polybar.sh &
 exec --no-startup-id feh --bg-fill --no-fehbg --randomize ~/images/wallpapers/*
-exec --no-startup-id compton -b
