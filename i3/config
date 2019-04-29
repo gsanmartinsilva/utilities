@@ -140,5 +140,5 @@ bindsym $mod+r mode "resize"
 
 #------ Start up applications
 exec --no-startup-id redshift -O 3500
-exec_always --no-startup-id ~/.config/polybar/start_polybar.sh &
+exec_always --no-startup-id ~/.config/polybar/start_polybar.sh 
 exec --no-startup-id feh --bg-fill --no-fehbg --randomize ~/images/wallpapers/*
