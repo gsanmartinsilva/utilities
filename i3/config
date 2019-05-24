@@ -1,11 +1,11 @@
 
-##_ _____                    __ _          __ _ _
-#(_)___ /    ___ ___  _ __  / _(_) __ _   / _(_) | ___
-#| | |_ \   / __/ _ \| '_ \| |_| |/ _` | | |_| | |/ _ \
-#| |___) | | (_| (_) | | | |  _| | (_| | |  _| | |  __/
-#|_|____/   \___\___/|_| |_|_| |_|\__, | |_| |_|_|\___|
-#a                                 |___/
-
+# ██╗██████╗      ██████╗ ██████╗ ███╗   ██╗███████╗██╗ ██████╗     ███████╗██╗██╗     ███████╗
+# ██║╚════██╗    ██╔════╝██╔═══██╗████╗  ██║██╔════╝██║██╔════╝     ██╔════╝██║██║     ██╔════╝
+# ██║ █████╔╝    ██║     ██║   ██║██╔██╗ ██║█████╗  ██║██║  ███╗    █████╗  ██║██║     █████╗  
+# ██║ ╚═══██╗    ██║     ██║   ██║██║╚██╗██║██╔══╝  ██║██║   ██║    ██╔══╝  ██║██║     ██╔══╝  
+# ██║██████╔╝    ╚██████╗╚██████╔╝██║ ╚████║██║     ██║╚██████╔╝    ██║     ██║███████╗███████╗
+# ╚═╝╚═════╝      ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝     ╚═╝     ╚═╝╚══════╝╚══════╝
+                                                                                             
 
 
 
@@ -13,10 +13,10 @@
 #|v|i|s|u|a|l|
 #+-+-+-+-+-+-+
 
-for_window [class="^.*"] border pixel 5
-gaps inner 10
+for_window [class="^.*"] border pixel 3
+gaps inner 0
 gaps outer 0
-font pango: SauceCodePro Nerd Font Black 10
+font pango:Hack 10
 
 
 # Read colors from .Xresources
@@ -29,31 +29,39 @@ set_from_resource $color10 color10 #FFF000
 #|k|e|y|b|i|n|d|i|n|g|s|
 #+-+-+-+-+-+-+-+-+-+-+-+
 set $mod Mod1
-# Open editor
-bindsym $mod+a exec urxvt -e atom
-floating_modifier $mod
-bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+e exec urxvt -e ranger
+
+# PROGRAMS
+bindsym $mod + d   exec rofi -show run -font "roboto 15" -width 25 # rofi
+bindsym $mod+Return exec i3-sensible-terminal # urxvt
+bindsym $mod+i 	exec urxvt -e gtop
+
+
+
+# MEDIA KEYS
+bindsym XF86MonBrightnessUp exec light -A 10 # increase screen brightness
+bindsym XF86MonBrightnessDown exec light -U 10 # decrease screen brightness
+bindsym XF86AudioRaiseVolume exec pactl -- set-sink-volume 0 +10% #increase volume
+bindsym XF86AudioLowerVolume exec pactl -- set-sink-volume 0 -10% #decrease volume
+bindsym XF86AudioMute exec pactl -- set-sink-mute 0 toggle #mute audio
+bindsym XF86AudioPlay exec playerctl --all-players play-pause #play/pause
+bindsym XF86AudioNext exec playerctl --all-players next #play/pause
+bindsym XF86AudioPrev exec playerctl --all-players previous #play/pause
+# POWER SETTINGS
+bindsym $mod+F9   exec ~/Scripts/lockscreen.sh # lock screen
+bindsym $mod+Menu exec ~/Scripts/power.sh
+ 
+
+
+
 # kill focused window
 bindsym $mod+q			[con_id="__focused__" instance="^(?!dropdown_).*$"] kill
 bindsym $mod+Shift+q		[con_id="__focused__" instance="^(?!dropdown_).*$"] exec --no-startup-id kill -9 `xdotool getwindowfocus getwindowpid`
-bindsym $mod+d exec dmenu_run
-bindsym $mod+i 	exec urxvt -e htop
-# change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+ntilde focus right
+
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
-# move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+ntilde move right
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
@@ -61,8 +69,6 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 # split toggle
 bindsym $mod+t	split toggle
-# Open browser
-bindsym $mod+w	exec --no-startup-id chromium
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 # toggle tiling / floating
@@ -111,15 +117,6 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 5 px or 5 ppt
-        bindsym k resize grow height 5 px or 5 ppt
-        bindsym l resize shrink height 5 px or 5 ppt
-        bindsym ntilde resize grow width 5 px or 5 ppt
-
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 5 px or 5 ppt
         bindsym Down resize grow height 5 px or 5 ppt
@@ -134,11 +131,15 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+client.focused #555555 #555555 #ffffff #99cc99 #6699cc    
+
 
 
 
 
 #------ Start up applications
-exec --no-startup-id redshift -O 3500
-exec_always --no-startup-id ~/.config/polybar/start_polybar.sh 
-exec --no-startup-id feh --bg-fill --no-fehbg --randomize ~/images/wallpapers/*
+exec --no-startup-id redshift -c ~/.config/redshift/redshift.conf &
+exec --no-startup-id dunst &
+exec --no-startup-id dropbox &
+exec_always --no-startup-id ~/.config/polybar/start_polybar.sh
+exec --no-startup-id feh --bg-fill --no-fehbg --randomize ~/Wallpapers/*

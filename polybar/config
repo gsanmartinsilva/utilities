@@ -22,7 +22,8 @@
 
 [colors]
 
-background = #2572A4
+; background = #2572A4
+background = #2d2d2d
 foreground = #FFFFFF
 primary = #ffb52a
 secondary = #e60053
@@ -62,10 +63,10 @@ margin-bottom =0
 ;------------;
 
 width = 100%
-height = 22
+height = 25
 offset-y = 0
 offset-x = 0
-
+radius = 0.0px
 border-top-size = 0
 border-bottom-size = 0
 border-right-size = 0
@@ -105,15 +106,16 @@ font-3 = "Font Awesome 5 Brands:pixelsize=12;3"
 ;---------------;
 
 fixed-center = true
-padding-left = 0
-padding-right = 1
-module-margin = 1
+padding-left = 1
+padding-right = 1.5
+module-margin = 1.5
 
 
-modules-left = i3 ram_memory cpu battery temperature disk
+;modules-left = i3 ram_memory cpu battery temperature disk
+modules-left = i3 cpu ram disk updates-arch redshift light
 modules-center = date
-modules-right = pulseaudio yay pacman wlan
-
+;modules-right = pulseaudio yay pacman wlan
+modules-right =  dropbox pulseaudio battery_1 wlan power
 ;tray-position = none
 ;tray-detached = true
 
@@ -127,6 +129,41 @@ modules-right = pulseaudio yay pacman wlan
 ; MODULES ;
 ;---------;
 
+[module/light]
+type = custom/script
+exec = val=$(light -G | awk -F. '{print $1}') && printf '%s%s' "$val" "%"
+interval = 5
+;format-underline = #FFFFFF
+format-prefix = ":"
+format-prefix-foreground = ${colors.foreground}
+;format-background = #FFFFFF
+;format-padding = 2
+
+
+;[module/power]
+;type = custom/script
+;exec =
+;click-left = ~/Scripts/power.sh
+;format-underline = #FFFFFF
+;format-prefix = ""
+;format-prefix-foreground = ${colors.foreground}
+;format-background = #FFFFFF
+;format-padding = 2
+
+
+[module/power]
+type          = custom/script
+exec          = echo ""
+click-left    = ~/Scripts/power.sh
+
+
+
+[module/spotify]
+type          = custom/script
+label         = %output%
+label-maxlen  = 40
+exec          = ~/Scripts/spotify.sh
+interval      = 5
 
 
 [module/battery]
@@ -150,7 +187,7 @@ ramp-capacity-4 = 
 
 [module/cpu]
 type = internal/cpu
-interval = 4
+interval = 1
 format-prefix =":"
 format-prefix-foreground = ${colors.foreground}
 ;format-prefix-foreground = ${colors.foreground-alt}
@@ -158,31 +195,10 @@ format-underline = #f90000
 label = %percentage:1%%
 
 
-[module/i3]
-type = internal/i3
-format = <label-state> <label-mode>
-index-sort = true
-pin-workspaces = true
-strip-wsnumbers = true
-enable-scroll = false
-wrapping-scroll = false
-label-separator = ~
-label-unfocused-foreground = ${colors.foreground}
-;label-focused = %index%
-label-focused-padding = 1
-label-unfocused-padding = 1
-label-focused-background = ${colors.background}
-label-focused-foreground = #f2777a
-label-urgent-foreground = #ff0000
-
-
-
-
-
-[module/ram_memory]
+[module/ram]
 type = custom/script
-exec = memory.sh
-interval = 5
+exec = free -m | awk '/^Mem/ {print 1+int(100*$3 '/' $2)"%"}'
+interval = 1
 ;format-underline = #FFFFFF
 format-prefix = ":"
 format-prefix-foreground = ${colors.foreground}
@@ -193,27 +209,56 @@ click-left = memory.sh
 
 [module/disk]
 type = custom/script
-exec = df -h | grep nvme0n1p6 | awk '{print $2}'
-interval = 30
-format-prefix = " "
+exec = df -h | grep nvme0n1p6 | awk '{print $4}'
+interval = 60
+format-prefix = ":"
 
 [module/pacman]
 type = custom/script
-exec = sleep 15 && checkupdates | wc -l
-interval = 1200
+exec = sleep 20 && checkupdates | wc -l
+interval = 10
 format-prefix = " "
 
 [module/yay]
 type = custom/script
-exec = sleep 15 && yay -Qu | wc -l
-interval = 1200
+exec = sleep 5 && yay -Qu | wc -l
+interval = 10
 format-prefix = " "
+
+
+[module/battery_1]
+type = custom/script
+exec = ~/Scripts/battery.sh
+interval = 7
+click-left = notify-send "$(~/Scripts/battery.sh -c)"
+
+
+
+[module/updates-arch]
+type = custom/script
+exec = ~/Scripts/updates_arch.sh -n
+interval = 600
+click-left = notify-send "$(~/Scripts/updates_arch.sh)"
+
+
+[module/dropbox]
+type = custom/script
+exec = ~/Scripts/dropbox.sh
+interval = 3
+click-left = notify-send "$(dropbox-cli status)"
+
+
+[module/redshift]
+type = custom/script
+exec = ~/Scripts/info-redshift-temp.sh
+interval = 120
 
 
 
 [module/temperature]
 type = internal/temperature
 thermal-zone = 0
+interval = 5
 warn-temperature = 60
 format = <ramp> <label>
 format-prefix= ""
@@ -290,6 +335,8 @@ ramp-signal-2 = 
 ramp-signal-3 = 
 ramp-signal-4 = 
 ramp-signal-foreground = ${colors.foreground}
+
+
 [module/eth]
 type = internal/network
 interface = enp4s0
@@ -303,3 +350,139 @@ format-disconnected =
 ;format-disconnected-underline = ${self.format-connected-underline}
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
+
+
+
+
+[module/backlight]
+type = custom/script
+exec=
+bar-NAME-format = %fill%%indicator%%empty%
+bar-NAME-width = 10
+
+bar-NAME-gradient = true
+bar-NAME-foreground-0 = #00ff00
+bar-NAME-foreground-1 = #ff9900
+bar-NAME-foreground-2 = #ff0000
+
+; The fill, indicator and empty icon can be configured like any <label>
+bar-NAME-fill = x
+bar-NAME-indicator = x
+bar-NAME-empty = x
+
+
+
+
+
+
+
+
+
+[module/i3]
+type = internal/i3
+
+; Only show workspaces defined on the same output as the bar
+;
+; Useful if you want to show monitor specific workspaces
+; on different bars
+;
+; Default: false
+pin-workspaces = true
+; This will split the workspace name on ':'
+; Default: false
+strip-wsnumbers = false
+; Sort the workspaces by index instead of the default
+; sorting that groups the workspaces by output
+; Default: false
+index-sort = true
+
+; Create click handler used to focus workspace
+; Default: true
+enable-click = true
+
+; Create scroll handlers used to cycle workspaces
+; Default: true
+enable-scroll = false
+
+; Wrap around when reaching the first/last workspace
+; Default: true
+wrapping-scroll = false
+
+; Set the scroll cycle direction 
+; Default: true
+reverse-scroll = false
+
+; Use fuzzy (partial) matching on labels when assigning 
+; icons to workspaces
+; Example: code;♚ will apply the icon to all workspaces 
+; containing 'code' in the label
+; Default: false
+fuzzy-match = true
+; ws-icon-[0-9]+ = label;icon
+; NOTE: The label needs to match the name of the i3 workspace
+ws-icon-0 = 1;♚
+ws-icon-1 = 2;♛
+ws-icon-2 = 3;♜
+ws-icon-3 = 4;♝
+ws-icon-4 = 5;♞
+ws-icon-default = ♟
+; NOTE: You cannot skip icons, e.g. to get a ws-icon-6
+; you must also define a ws-icon-5.
+
+; Available tags:
+;   <label-state> (default) - gets replaced with <label-(focused|unfocused|visible|urgent)>
+;   <label-mode> (default)
+format = <label-state> <label-mode>
+
+; Available tokens:
+;   %mode%
+; Default: %mode%
+label-mode = %mode%
+label-mode-padding = 2
+label-mode-background = #e60053
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-focused = %index%
+label-focused-foreground = #ffffff
+label-focused-background =  #99cc99
+label-focused-underline = #fba922
+label-focused-padding = 1
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-unfocused = %index%
+label-unfocused-padding = 1
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-visible = %index%
+label-visible-underline = #555555
+label-visible-padding = 1
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-urgent = %index%
+label-urgent-foreground = #000000
+label-urgent-background = #bd2c40
+label-urgent-padding = 1
+; Separator in between workspaces
+label-separator = 
+label-separator-padding = 0
+label-separator-foreground = #ffb52a
