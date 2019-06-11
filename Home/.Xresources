@@ -2,7 +2,7 @@
 ! URXVT CONFIG !
 !--------------!
 
-URxvt.internalBorder:	30
+URxvt.internalBorder:	15
 URxvt.scrollBar:	false
 URxvt.letterSpace:	-1
 URxvt.cursorColor:	#718C00
@@ -10,14 +10,8 @@ URxvt*cursorUnderline: false
 URxvt.font: xft:Hack:size=13, xft:Font Awesome 5 Free Solid:size=13
 !! Larger history limit
 urxvt.saveLines: 1000000
+URxvt.perl-ext-common:  default,resize-font,matcher,tabbedex
 
-!! Perl extensions
-urxvt.perl-ext-common: resize-font
-!! Change font size on Control-Plus/Minus
-URxvt.keysym.C-minus:     resize-font:smaller
-URxvt.keysym.C-plus:      resize-font:bigger
-URxvt.keysym.C-equal:     resize-font:reset
-URxvt.keysym.C-question:  resize-font:show
 
 ! ------------------------------------------------------------------------------
 ! theme colors: prmsrswt/dotfiles
