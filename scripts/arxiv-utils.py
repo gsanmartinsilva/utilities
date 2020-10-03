@@ -12,7 +12,7 @@ def paper_to_filename(paper: dict) -> str:
     print(f"author:  {paper['author']}")   # "main" author
     print(f"authors: {paper['authors']}")  # list of all authors
     print(f"title:   {paper['title']}\n")
-    return filename
+    return filename.replace(':', '-')
 
 def parse_line(line: str):
     id_pattern = r"(\d{4}\.\d{4,6}(v\d+)?)"
@@ -21,13 +21,14 @@ def parse_line(line: str):
 
 # List of folders where the script will run
 # Note: use absolute paths
-folders = ['/mnt/c/Users/gsanm/Downloads/']
+folders = [r'C:\Users\gsanm\Downloads']
 
 for folder in folders:
     files = []
     for file in os.listdir(folder):
         if file.endswith(".pdf"):
             files.append(file)
+    print(files)
     paper_ids = [parse_line(file.strip()) for file in files]
     paper_ids = [x for x in paper_ids if x is not None]
     papers = arxiv.query(id_list=paper_ids)
