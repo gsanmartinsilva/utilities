@@ -11,8 +11,9 @@ def paper_to_filename(paper: dict) -> str:
     title_str = " ".join(map(str.strip, paper["title"].split("\n")))
     # generate filename
     filename = f"[{ids}] - {author_str} - {title_str}"
-
-    return filename.replace(':', '-')
+    for c in [':', '?']:
+        filename = filename.replace(c, ' ')
+    return filename
 
 def parse_line(line: str):
     id_pattern = r"(\d{4}\.\d{4,6}(v\d+)?)"
