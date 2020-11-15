@@ -2,16 +2,16 @@ import os, re, sys
 import arxiv
 
 def paper_to_filename(paper: dict) -> str:
+    # paper id
+    ids = paper['arxiv_url'].split('/')[-1]
+    # paper author
     authors = paper["authors"]
-    title_str = " ".join(map(str.strip, paper["title"].split("\n")))
     author_str = authors[0] if len(authors) == 0 else f"{authors[0]} et al."
-    filename = f"{author_str} - {title_str}"
+    # paper title
+    title_str = " ".join(map(str.strip, paper["title"].split("\n")))
+    # generate filename
+    filename = f"[{ids}] - {author_str} - {title_str}"
 
-    print(f"{filename}.pdf")
-    print(f"url:     {paper['arxiv_url']}")
-    print(f"author:  {paper['author']}")   # "main" author
-    print(f"authors: {paper['authors']}")  # list of all authors
-    print(f"title:   {paper['title']}\n")
     return filename.replace(':', '-')
 
 def parse_line(line: str):
@@ -21,24 +21,24 @@ def parse_line(line: str):
 
 # List of folders where the script will run
 # Note: use absolute paths
-folders = [r'C:\Users\gsanm\Downloads']
-
+folders = [r'/mnt/c/Users/gsanmartin/Downloads',]
+folder_dest = r'/mnt/c/Users/gsanmartin/Dropbox/Articles'
+# iterate over folders, searching for pds.
+# if a pdf filename matches a download arxiv paper, put a
+# better title
 for folder in folders:
     files = []
     for file in os.listdir(folder):
         if file.endswith(".pdf"):
             files.append(file)
-    print(files)
     paper_ids = [parse_line(file.strip()) for file in files]
     paper_ids = [x for x in paper_ids if x is not None]
     papers = arxiv.query(id_list=paper_ids)
 
     for paper, paper_id in zip(papers, paper_ids):
-        print(os.path.join(folder, paper_id + '.pdf'))
+        paper_name = paper_to_filename(paper)
         if os.path.exists(os.path.join(folder, paper_id + '.pdf')):
-            print("[Renamed]")
             os.rename(os.path.join(folder, paper_id + '.pdf'),
-                        os.path.join(folder, paper_to_filename(paper) + '.pdf'))
+                        os.path.join(folder_dest, paper_name + '.pdf'))
         else:
-            print("[Downloaded]")
-            arxiv.download(paper, slugify=paper_to_filename)
+            pass
