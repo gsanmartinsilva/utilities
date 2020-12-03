@@ -1,5 +1,7 @@
-import os, re, sys
+import os
+import re
 import arxiv
+
 
 def paper_to_filename(paper: dict) -> str:
     # paper id
@@ -15,14 +17,16 @@ def paper_to_filename(paper: dict) -> str:
         filename = filename.replace(c, ' ')
     return filename
 
+
 def parse_line(line: str):
     id_pattern = r"(\d{4}\.\d{4,6}(v\d+)?)"
     m = re.match(fr".*{id_pattern}(\.pdf)?$", line)
     return m.group(1) if m is not None else None
 
+
 # List of folders where the script will run
 # Note: use absolute paths
-folders = [r'C:\Users\gsanmartin\Downloads',]
+folders = [r'C:\Users\gsanmartin\Downloads']
 folder_dest = r'C:\Users\gsanmartin\Google Drive\Articles'
 # iterate over folders, searching for pds.
 # if a pdf filename matches a download arxiv paper, put a
@@ -40,6 +44,6 @@ for folder in folders:
         paper_name = paper_to_filename(paper)
         if os.path.exists(os.path.join(folder, paper_id + '.pdf')):
             os.rename(os.path.join(folder, paper_id + '.pdf'),
-                        os.path.join(folder_dest, paper_name + '.pdf'))
+                      os.path.join(folder_dest, paper_name + '.pdf'))
         else:
             pass
