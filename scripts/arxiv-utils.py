@@ -26,8 +26,8 @@ def parse_line(line: str):
 
 # List of folders where the script will run
 # Note: use absolute paths
-folders = [r'C:\Users\gsanmartin\Downloads']
-folder_dest = r'C:\Users\gsanmartin\Google Drive\Articles'
+folders = [r'C:\Users\gsanm\Downloads']
+folder_dest = r'C:\Users\gsanm\Google Drive\Articles'
 # iterate over folders, searching for pds.
 # if a pdf filename matches a download arxiv paper, put a
 # better title
