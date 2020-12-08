@@ -16,4 +16,4 @@ Useful bits of code for the modern computer enthusiast. Scripts, dotfiles and a 
 ## SSH  Connection
 
 ### How to create a ssh key pair
-* Create a key pair using rsa algorithm and 4096 bits: ´ssh-keygen -t rsa -b 4096´ 
+* Create a key pair using rsa algorithm and 4096 bits: `ssh-keygen -t rsa -b 4096`.
