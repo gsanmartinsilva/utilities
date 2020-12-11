@@ -17,3 +17,13 @@ Useful bits of code for the modern computer enthusiast. Scripts, dotfiles and a 
 
 ### How to create a ssh key pair
 * Create a key pair using rsa algorithm and 4096 bits: `ssh-keygen -t rsa -b 4096`.
+### How to connect to GitHub repo using ssh
+
+
+
+## Useful Linux Commands
+
+### How to list the contents of a folder and its sizes in human readable format
+> `du -sh *`
+### How to empty a file, without changing its permissions
+> `echo "" > file`
